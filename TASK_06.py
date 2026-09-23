@@ -7,14 +7,15 @@ delivery = int(input("Actual minutes: "))
 damaged_parcels = int(input("Damaged parcels: "))
 delay = delivery - promised_delivery 
 
-if damaged_parcels > 0:
-    service_status = "SERVICE FAILURE"
-elif delay <= 0:
-    service_status = "ON TIME"
-elif delay <= 15:
-    service_status = "MINOR DELAY"
-else:
-    service_status = "MAJOR DELAY"
+def service_status(damaged_parcels,delay):
+    if damaged_parcels > 0:
+        return "SERVICE FAILURE"
+    elif delay <= 0:
+        return "ON TIME"
+    elif delay <= 15:
+        return "MINOR DELAY"
+    else:
+        return "MAJOR DELAY"
 
 print(f"Delay: {delay} minutes")
-print(f"Service status: {service_status}")
+print(f"Service status: {service_status(damaged_parcels,delay)}")
