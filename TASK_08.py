@@ -7,11 +7,6 @@
 #• Capacity: capacity and every parcel weight must be greater than zero.
 #• Performance: promised and actual minutes cannot be negative; damaged parcels cannot be negative.
 #• Weekly report: exactly seven non-negative delivery counts are required; target must be non-negative.
-distance >= 0
-weight >= 0 
-capacity >= 0 
-parcelWeights >=0
-
 
 #Required error templates
 #Error - Select a service from 1 to 8.
