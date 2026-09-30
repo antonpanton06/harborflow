@@ -29,6 +29,14 @@ def main():
             oldRef = input("Reference: ")
             validate_reference(oldRef)
 
+        elif option == 3:
+            distance = float(input("Distance (km):"))
+            weight = float(input("Total parcel weight (kg): "))
+            service_code = input("Service code (S for Standard), (X for Express) or (P for priority): ")
+            calculate_quote(distance, weight, service_code)
+
+
+
         elif option == 7:
             deliveries_input = input("Completed deliveries: ")
             target = int(input("Daily target: "))
@@ -55,6 +63,24 @@ def validate_reference(reference):
 if __name__ == "__main__":
     TestReference = "    hfl-no r-2048 "
     
+#Option 3,
+def calculate_quote(distance, weight, service_code):
+
+    multipliers = {"S": 1.00,
+                   "X": 1.25,
+                   "P": 1.60}
+    
+    multiplier = multipliers[service_code]
+    subtotal = 45 + distance * 6.50 + weight * 4.00
+    quote = subtotal * multiplier
+
+
+    print(f"Delivery quote: {quote:.2f} SEK")     
+#Option 4,
+
+#Option 5,
+
+#Option 6,
 
 #Option 7,
 def weekly_dispatch_report(deliveries_input, target):
@@ -109,3 +135,5 @@ def weekly_dispatch_report(deliveries_input, target):
 
 if __name__ == "__main__":
     main()
+
+#Option 8, 
