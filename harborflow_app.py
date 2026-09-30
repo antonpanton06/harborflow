@@ -35,7 +35,9 @@ def main():
             service_code = input("Service code (S for Standard), (X for Express) or (P for priority): ")
             calculate_quote(distance, weight, service_code)
 
-
+        elif option == 4:
+            scanned_labels = (input("Scanned labels:"))
+            ConsolidateParcelLabels(scanned_labels)
 
         elif option == 7:
             deliveries_input = input("Completed deliveries: ")
@@ -77,6 +79,24 @@ def calculate_quote(distance, weight, service_code):
 
     print(f"Delivery quote: {quote:.2f} SEK")     
 #Option 4,
+def ConsolidateParcelLabels(scanned_labels):
+    labels = scanned_labels.split(",")
+    unique_labels =[]
+    #User Input could be: gb-104, GB-220, gb-104, se-011, GB-220
+    print(f"Scanned labels: {scanned_labels}")
+
+    for label in labels:
+        label = label.strip().upper()
+
+        if label not in unique_labels:
+            unique_labels.append(label)
+
+    print("Unique load list:")
+    #Create a loop for printing all unique labels.
+    for i in range(len(unique_labels)):
+        print(f"{i + 1}. {unique_labels[i]}")
+    print(f"Total unique parcels: {len(unique_labels)}")
+
 
 #Option 5,
 
