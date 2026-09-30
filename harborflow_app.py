@@ -30,7 +30,9 @@ def main():
             validate_reference(oldRef)
 
         elif option == 7:
-            weekly_dispatch_report()
+            deliveries_input = input("Completed deliveries: ")
+            target = int(input("Daily target: "))
+            weekly_dispatch_report(deliveries_input, target)
 
 
 #Option 2, 
@@ -55,8 +57,8 @@ if __name__ == "__main__":
     
 
 #Option 7,
-def weekly_dispatch_report():
-    deliveries_input = input("Completed deliveries: ")
+def weekly_dispatch_report(deliveries_input, target):
+    
     delivery_values = deliveries_input.split(",")
 
     deliveries = []
@@ -64,7 +66,6 @@ def weekly_dispatch_report():
     for value in delivery_values:
         deliveries.append(int(value.strip()))
 
-    target = int(input("Daily target: "))
 
     weekdays = [
         "Monday",
