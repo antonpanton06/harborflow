@@ -18,6 +18,7 @@ def main():
         print("5. Check van capacity")
         print("6. Classify service performance")
         print("7. Produce weekly dispatch report")
+        print("8. Compare service scenarios")
 
         option = int(input("Select service: "))
 
@@ -55,12 +56,15 @@ def main():
             print(f"Delay: {delay} minutes")
             print(f"Service status: {service_status(damaged_parcels,delay)}")
 
-            
-
         elif option == 7:
             deliveries_input = input("Completed deliveries: ")
             target = int(input("Daily target: "))
             weekly_dispatch_report(deliveries_input, target)
+
+        elif option == 8:
+            distance = float(input("Distance (km):"))
+            weight = float(input("Total parcel weight (kg): "))
+            compare_services(distance, weight)
 
 
 #Option 2, 
@@ -95,7 +99,8 @@ def calculate_quote(distance, weight, service_code):
     quote = subtotal * multiplier
 
 
-    print(f"Delivery quote: {quote:.2f} SEK")     
+    print(f"Delivery quote: {quote:.2f} SEK")
+    return quote   
 
 #Option 4,
 def ConsolidateParcelLabels(scanned_labels):
@@ -146,7 +151,6 @@ def ParcelPacking(vanCap, parcelWeights):
     print(f"Loaded weight: {sum(acceptedParcel):.2f}kg")
     print(f"Remaining Capacity: {vanCap:.2f}kg")
 
-    
 #Option 6,
 def service_status(damaged_parcels,delay):
 
@@ -210,7 +214,28 @@ def weekly_dispatch_report(deliveries_input, target):
     print(f"Lowest day: {weekdays[lowest_day]} ({lowest})")
     print(f"Days meeting target: {days_meeting_target}")
 
+#Option 8, 
+def compare_services(distance, weight):
+    standard = calculate_quote(distance, weight, "S")
+    express = calculate_quote(distance, weight, "X")
+    priority = calculate_quote(distance, weight, "P")
+
+    print("Service comparison")
+    print(f"Standard: {standard:.2f} SEK")
+    print(f"Express: {express:.2f} SEK")
+    print(f"Priority: {priority:.2f} SEK")
+
+    services = {
+    "Standard": standard,
+    "Express": express,
+    "Priority": priority
+}
+    
+    cheapest = min(services, key=services.get)
+    most_expensive = max(services, key=services.get)
+
+    print(f"Cheapest service: {cheapest}")
+    print(f"Most expensive service: {most_expensive}")
+
 if __name__ == "__main__":
     main()
-
-#Option 8, 
