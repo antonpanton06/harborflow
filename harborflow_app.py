@@ -39,6 +39,24 @@ def main():
             scanned_labels = (input("Scanned labels:"))
             ConsolidateParcelLabels(scanned_labels)
 
+        elif option == 5:
+        # ParcelPacking("100", "10,70, 40, 20, 500")
+            
+            capacity = input("Van capacity (kg): ")
+            parcelsWeights = input("Parcel weight (kg): ")
+            ParcelPacking(capacity, parcelsWeights)
+
+        elif option == 6:
+            promised_delivery = int(input("Promised minutes: "))
+            delivery = int(input("Actual minutes: "))
+            damaged_parcels = int(input("Damaged parcels: "))
+            delay = delivery - promised_delivery 
+            service_status(damaged_parcels, delay)
+            print(f"Delay: {delay} minutes")
+            print(f"Service status: {service_status(damaged_parcels,delay)}")
+
+            
+
         elif option == 7:
             deliveries_input = input("Completed deliveries: ")
             target = int(input("Daily target: "))
@@ -78,12 +96,13 @@ def calculate_quote(distance, weight, service_code):
 
 
     print(f"Delivery quote: {quote:.2f} SEK")     
+
 #Option 4,
 def ConsolidateParcelLabels(scanned_labels):
+
     labels = scanned_labels.split(",")
     unique_labels =[]
     #User Input could be: gb-104, GB-220, gb-104, se-011, GB-220
-    print(f"Scanned labels: {scanned_labels}")
 
     for label in labels:
         label = label.strip().upper()
@@ -92,15 +111,53 @@ def ConsolidateParcelLabels(scanned_labels):
             unique_labels.append(label)
 
     print("Unique load list:")
+
     #Create a loop for printing all unique labels.
     for i in range(len(unique_labels)):
         print(f"{i + 1}. {unique_labels[i]}")
     print(f"Total unique parcels: {len(unique_labels)}")
 
-
 #Option 5,
+def ParcelPacking(vanCap, parcelWeights):
 
+    # Save all accepted parcel
+    acceptedParcel = []             
+
+    print(f"Van Capacity (kg): {vanCap}")
+    print(f"Parcel Weight (kg): {parcelWeights}")
+    # Turn inputed van capacity string to integer (May change to float)
+    vanCap = int(vanCap)
+    parcelWeights = parcelWeights.replace(" ", "").split(",")   # Turn inputed parcel weight string to list
+    parcelWeights = [int(x) for x in parcelWeights]
+   
+                                                                
+    # Check if parcel weight fits in van capacity
+    # If so prin "Accepted" and add parcel to list with accepted parcels
+    for i in enumerate(parcelWeights):                          
+        if (vanCap - i[1]) >= 0:                                
+            print(f"Parcel {i[0]+1}: Accepted")
+            acceptedParcel.append(i[1])
+            vanCap = vanCap - i[1]
+        else: # else print "Rejected"
+            print(f"Parcel {i[0]+1}: Rejected")
+
+     # Results
+    print(f"Accepted parcels: {len(acceptedParcel)}")
+    print(f"Loaded weight: {sum(acceptedParcel):.2f}kg")
+    print(f"Remaining Capacity: {vanCap:.2f}kg")
+
+    
 #Option 6,
+def service_status(damaged_parcels,delay):
+
+    if damaged_parcels > 0:
+        return "SERVICE FAILURE"
+    elif delay <= 0:
+         return "ON TIME"
+    elif delay <= 15:
+         return "MINOR DELAY"
+    else:
+         return "MAJOR DELAY"
 
 #Option 7,
 def weekly_dispatch_report(deliveries_input, target):
