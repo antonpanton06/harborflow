@@ -20,7 +20,12 @@ def main():
         print("7. Produce weekly dispatch report")
         print("8. Compare service scenarios")
 
-        option = int(input("Select service: "))
+        try:
+            option = int(input("Select service: "))
+
+        except ValueError:
+            print("Invalid input. Please enter a number from 1 to 8.")
+            continue
 
         if option == 1:
             print("Console closed. Dispatch data remains safe.")
@@ -66,6 +71,9 @@ def main():
             weight = float(input("Total parcel weight (kg): "))
             compare_services(distance, weight)
 
+        else:
+            print("Invalid option. Please select a valid service.")
+
 
 #Option 2, 
 def validate_reference(reference):
@@ -105,6 +113,7 @@ def calculate_quote(distance, weight, service_code):
 #Option 4,
 def ConsolidateParcelLabels(scanned_labels):
 
+
     labels = scanned_labels.split(",")
     unique_labels =[]
     #User Input could be: gb-104, GB-220, gb-104, se-011, GB-220
@@ -112,8 +121,19 @@ def ConsolidateParcelLabels(scanned_labels):
     for label in labels:
         label = label.strip().upper()
 
+        if not label:
+            continue #Skip empty labels
+
+        if len(label) != 6 or label[2] != "-":
+            print(f"Invalid label format: {label}")
+            continue #Skip invalid labels
+
         if label not in unique_labels:
             unique_labels.append(label)
+
+    if not unique_labels:
+        print("No valid labels found.")
+        
 
     print("Unique load list:")
 
@@ -121,6 +141,7 @@ def ConsolidateParcelLabels(scanned_labels):
     for i in range(len(unique_labels)):
         print(f"{i + 1}. {unique_labels[i]}")
     print(f"Total unique parcels: {len(unique_labels)}")
+
 
 #Option 5,
 def ParcelPacking(vanCap, parcelWeights):
