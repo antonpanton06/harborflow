@@ -37,7 +37,7 @@ def main():
 
         elif option == 3:
             try:
-                distance = float(input("Distance (km):"))
+                distance = float(input("Distance (km): "))
                 weight = float(input("Total parcel weight (kg): "))
             except ValueError:
                 print("Error - Values must be floats.")
@@ -83,7 +83,7 @@ def main():
 
         elif option == 8:
             try:
-                distance = float(input("Distance (km):"))
+                distance = float(input("Distance (km): "))
                 weight = float(input("Total parcel weight (kg): "))
             except ValueError:
                 print("Error - Value must be float.")
