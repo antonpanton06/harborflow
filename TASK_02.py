@@ -23,7 +23,7 @@ returns the normalized reference when valid and an empty string when invalid.
 """
 def validate_reference(reference):
     oldRef = reference      # copy of old reference
-    reference = reference.upper().strip().replace(" ", "")
+    reference = reference.upper().replace(" ", "")
     # Literally checking everything (i think), and if someting is wrong make reference an empty string
     # Maybe should make a if-block to print what is wrong with reference (only if needed or i feel like it)
     if reference[0:3] != "HFL" or reference[3] != "-" or reference[7] != "-" or reference[4:7].isalpha() == False or reference[9:12].isdigit() == False:

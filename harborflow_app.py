@@ -36,9 +36,13 @@ def main():
             validate_reference(oldRef)
 
         elif option == 3:
-            distance = float(input("Distance (km):"))
-            weight = float(input("Total parcel weight (kg): "))
-            service_code = input("Service code (S for Standard), (X for Express) or (P for priority): ")
+            try:
+                distance = float(input("Distance (km):"))
+                weight = float(input("Total parcel weight (kg): "))
+            except ValueError:
+                print("Error - Values must be floats.")
+                continue
+            service_code = input("Service code (S for Standard), (X for Express) or (P for priority): ").upper()
             calculate_quote(distance, weight, service_code)
 
         elif option == 4:
@@ -53,22 +57,37 @@ def main():
             ParcelPacking(capacity, parcelsWeights)
 
         elif option == 6:
-            promised_delivery = int(input("Promised minutes: "))
-            delivery = int(input("Actual minutes: "))
-            damaged_parcels = int(input("Damaged parcels: "))
+            try:
+                promised_delivery = int(input("Promised minutes: "))
+                delivery = int(input("Actual minutes: "))
+                damaged_parcels = int(input("Damaged parcels: "))
+            except ValueError:
+                print("Error - Value must be an integer")
+                continue
             delay = delivery - promised_delivery 
+            if (delivery < 0 or promised_delivery < 0):
+                print("Error - Values must be greater than zero.")
+                continue
             service_status(damaged_parcels, delay)
             print(f"Delay: {delay} minutes")
             print(f"Service status: {service_status(damaged_parcels,delay)}")
 
         elif option == 7:
             deliveries_input = input("Completed deliveries: ")
-            target = int(input("Daily target: "))
+            try:
+                target = int(input("Daily target: "))
+            except ValueError:
+                print("Error - Value must be an integer.")
+                continue
             weekly_dispatch_report(deliveries_input, target)
 
         elif option == 8:
-            distance = float(input("Distance (km):"))
-            weight = float(input("Total parcel weight (kg): "))
+            try:
+                distance = float(input("Distance (km):"))
+                weight = float(input("Total parcel weight (kg): "))
+            except ValueError:
+                print("Error - Value must be float.")
+                continue
             compare_services(distance, weight)
 
         else:
@@ -79,7 +98,7 @@ def main():
 def validate_reference(reference):
     
     oldRef = reference      # copy of old reference
-    reference = reference.upper().strip().replace(" ", "")
+    reference = reference.upper().replace(" ", "")
     
     # Literally checking everything (i think), and if someting is wrong make reference an empty string
     # Maybe should make a if-block to print what is wrong with reference (only if needed or i feel like it)
@@ -91,9 +110,6 @@ def validate_reference(reference):
     else:                                           # If ir is empty it is invalid
         print(f"Invalid reference: {oldRef}")       #
     return reference
-
-if __name__ == "__main__":
-    TestReference = "    hfl-no r-2048 "
     
 #Option 3,
 def calculate_quote(distance, weight, service_code):
@@ -151,25 +167,22 @@ def ConsolidateParcelLabels(scanned_labels):
 
 #Option 5,
 def ParcelPacking(vanCap, parcelWeights):
+    try:
+        vanCap = int(vanCap)                                        # Turn inputed van capacity string to integer (May change to float)
+        parcelWeights = parcelWeights.replace(" ", "").split(",")   # Turn inputed parcel weight string to list
+        parcelWeights = [int(x) for x in parcelWeights]             # Turn all elements in list into integers
 
-    if vanCap < 0 or any(weight < 0 for weight in parcelWeights):
+    except ValueError:                                              # Checks that input is an integer
+        print("Error - Value must be an integer and not empty.")
+        return None
+    if vanCap < 0 or any(weight < 0 for weight in parcelWeights):   # Checks if input values are greater than zero
         print("Error - Value must be greater than zero.")
         return None
     
     # Save all accepted parcel
-    acceptedParcel = []             
-
-    print(f"Van Capacity (kg): {vanCap}")
-    print(f"Parcel Weight (kg): {parcelWeights}")
-    # Turn inputed van capacity string to integer (May change to float)
-    vanCap = int(vanCap)
-    parcelWeights = parcelWeights.replace(" ", "").split(",")   # Turn inputed parcel weight string to list
-    parcelWeights = [int(x) for x in parcelWeights]
-
-   
-                                                                
+    acceptedParcel = []
     # Check if parcel weight fits in van capacity
-    # If so prin "Accepted" and add parcel to list with accepted parcels
+    # If so print "Accepted" and add parcel to list with accepted parcels
     for i in enumerate(parcelWeights):                          
         if (vanCap - i[1]) >= 0:                                
             print(f"Parcel {i[0]+1}: Accepted")
@@ -269,7 +282,7 @@ def compare_services(distance, weight):
     "Standard": standard,
     "Express": express,
     "Priority": priority
-}
+    }
     
     cheapest = min(services, key=services.get)
     most_expensive = max(services, key=services.get)
