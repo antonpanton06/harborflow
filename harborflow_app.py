@@ -24,7 +24,7 @@ def main():
             option = int(input("Select service: "))
 
         except ValueError:
-            print("Invalid input. Please enter a number from 1 to 8.")
+            print("Error - Please select a service from 1 to 8.")
             continue
 
         if option == 1:
@@ -42,7 +42,7 @@ def main():
             calculate_quote(distance, weight, service_code)
 
         elif option == 4:
-            scanned_labels = (input("Scanned labels:"))
+            scanned_labels = (input("Scanned labels: "))
             ConsolidateParcelLabels(scanned_labels)
 
         elif option == 5:
@@ -101,6 +101,13 @@ def calculate_quote(distance, weight, service_code):
     multipliers = {"S": 1.00,
                    "X": 1.25,
                    "P": 1.60}
+
+    if distance < 0 or weight < 0:
+        print("Error - Value must be grater than zero.")
+        return None
+    elif service_code not in multipliers:
+        print("Error - Service code must be S, X or P.")
+        return None
     
     multiplier = multipliers[service_code]
     subtotal = 45 + distance * 6.50 + weight * 4.00
@@ -142,10 +149,13 @@ def ConsolidateParcelLabels(scanned_labels):
         print(f"{i + 1}. {unique_labels[i]}")
     print(f"Total unique parcels: {len(unique_labels)}")
 
-
 #Option 5,
 def ParcelPacking(vanCap, parcelWeights):
 
+    if vanCap < 0 or any(weight < 0 for weight in parcelWeights):
+        print("Error - Value must be greater than zero.")
+        return None
+    
     # Save all accepted parcel
     acceptedParcel = []             
 
@@ -155,6 +165,7 @@ def ParcelPacking(vanCap, parcelWeights):
     vanCap = int(vanCap)
     parcelWeights = parcelWeights.replace(" ", "").split(",")   # Turn inputed parcel weight string to list
     parcelWeights = [int(x) for x in parcelWeights]
+
    
                                                                 
     # Check if parcel weight fits in van capacity
@@ -175,6 +186,10 @@ def ParcelPacking(vanCap, parcelWeights):
 #Option 6,
 def service_status(damaged_parcels,delay):
 
+    if damaged_parcels < 0:
+        print("Error - Value must be greater than zero.")
+        return None
+
     if damaged_parcels > 0:
         return "SERVICE FAILURE"
     elif delay <= 0:
@@ -186,6 +201,10 @@ def service_status(damaged_parcels,delay):
 
 #Option 7,
 def weekly_dispatch_report(deliveries_input, target):
+
+    if range(7) != range(len(deliveries_input.split(","))):
+        print("Error -  Weekly report requires 7 delivery counts.")
+        return None
     
     delivery_values = deliveries_input.split(",")
 
