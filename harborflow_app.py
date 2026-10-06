@@ -85,6 +85,11 @@ def main():
             try:
                 distance = float(input("Distance (km): "))
                 weight = float(input("Total parcel weight (kg): "))
+
+                if distance <= 0 or weight <= 0:
+                    print("Error - Values must be greater than zero.")
+                    continue
+
             except ValueError:
                 print("Error - Value must be float.")
                 continue
@@ -135,7 +140,6 @@ def calculate_quote(distance, weight, service_code):
 
 #Option 4,
 def ConsolidateParcelLabels(scanned_labels):
-
 
     labels = scanned_labels.split(",")
     unique_labels =[]

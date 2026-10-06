@@ -3,12 +3,12 @@ HARBORFLOW DISPATCH CONSOLE - TEAM README
 Run instructions
 ----------------
 Command:
-Python version tested:
+Python version tested: 3.14.7 
 
 Team members and concrete contributions
 ---------------------------------------
-Name:
-Contribution:
+Name: Anton Johansson
+Contribution: Task_04, Task_06 and Task_08
 
 Name:
 Contribution:
