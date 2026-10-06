@@ -107,7 +107,10 @@ def validate_reference(reference):
     
     # Literally checking everything (i think), and if someting is wrong make reference an empty string
     # Maybe should make a if-block to print what is wrong with reference (only if needed or i feel like it)
-    if reference[0:3] != "HFL" or reference[3] != "-" or reference[7] != "-" or reference[4:7].isalpha() == False or reference[9:12].isdigit() == False:
+    # Example reference: HFL-NOR-2048
+    if len(reference) != 12:
+        reference = ""
+    elif reference[0:3] != "HFL" or reference[3] != "-" or reference[7] != "-" or reference[4:7].isalpha() == False or reference[9:12].isdigit() == False:
         reference = ""
 
     if len(reference) != 0:                         # If string isnt empty by this point it is valid
@@ -115,7 +118,6 @@ def validate_reference(reference):
     else:                                           # If ir is empty it is invalid
         print(f"Invalid reference: {oldRef}")       #
     return reference
-    
 #Option 3,
 def calculate_quote(distance, weight, service_code):
 
