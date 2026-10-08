@@ -13,8 +13,8 @@ Contribution: Task_04, Task_06 and Task_08
 Name: Nils-Oskar Arnell
 Contribution: Task_02, Task_05, exception handling/bug fixes for whole program
 
-Name:
-Contribution:
+Name: Vladyslav Pryshchep
+Contribution: Building dispatch console menu and producing weekly dispatch report
 
 Name (if applicable):
 Contribution:
