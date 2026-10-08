@@ -10,8 +10,8 @@ Team members and concrete contributions
 Name: Anton Johansson
 Contribution: Task_04, Task_06 and Task_08
 
-Name:
-Contribution:
+Name: Nils-Oskar Arnell
+Contribution: Task_02, Task_05, exception handling/bug fixes for whole program
 
 Name:
 Contribution:
