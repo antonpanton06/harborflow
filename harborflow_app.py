@@ -32,7 +32,7 @@ def main():
             running = False
 
         elif option == 2:
-            oldRef = input("Reference: ")
+            oldRef = input("Booking reference: ")
             validate_reference(oldRef)
 
         elif option == 3:
@@ -114,9 +114,9 @@ def validate_reference(reference):
         reference = ""
 
     if len(reference) != 0:                         # If string isnt empty by this point it is valid
-        print(f"Valid reference: {reference}")      #
+        print(f"Booking reference: {reference}")      #
     else:                                           # If ir is empty it is invalid
-        print(f"Invalid reference: {oldRef}")       #
+        print(f"Invalid booking reference: {oldRef}")       #
     return reference
 #Option 3,
 def calculate_quote(distance, weight, service_code):
@@ -178,6 +178,7 @@ def ParcelPacking(vanCap, parcelWeights):
         parcelWeights = parcelWeights.replace(" ", "").split(",")   # Turn inputed parcel weight string to list
         for i in range(len(parcelWeights)):                         # Turn all elements in list into integers
             parcelWeights[i] = int(parcelWeights[i])
+        
     except ValueError:                                              # Checks that input is an integer
         print("Error - Value must be an integer and not empty.")
         return None
