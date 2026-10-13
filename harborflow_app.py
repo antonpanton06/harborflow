@@ -176,8 +176,8 @@ def ParcelPacking(vanCap, parcelWeights):
     try:
         vanCap = int(vanCap)                                        # Turn inputed van capacity string to integer (May change to float)
         parcelWeights = parcelWeights.replace(" ", "").split(",")   # Turn inputed parcel weight string to list
-        parcelWeights = [int(x) for x in parcelWeights]             # Turn all elements in list into integers
-
+        for i in range(len(parcelWeights)):                         # Turn all elements in list into integers
+            parcelWeights[i] = int(parcelWeights[i])
     except ValueError:                                              # Checks that input is an integer
         print("Error - Value must be an integer and not empty.")
         return None
