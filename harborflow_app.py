@@ -24,7 +24,7 @@ def main():
             option = int(input("Select service: "))
 
         except ValueError:
-            print("Error - Please select a service from 1 to 8.")
+            print("Error - Select a service from 1 to 8.")
             continue
 
         if option == 1:
