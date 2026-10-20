@@ -227,16 +227,20 @@ def weekly_dispatch_report(deliveries_input, target):
         print("Error -  Weekly report requires 7 delivery counts.")
         return None
 
-    try:
-        deliveries = [int(value.strip()) for value in values]
-    except ValueError:
-        print("Error - Delivery counts must be integers.")
-        return None
+    deliveries = []
+    for value in values:                      # convert each text value to an int
+        try:
+            deliveries.append(int(value.strip()))
+        except ValueError:
+            print("Error - Delivery counts must be integers.")
+            return None
 
     weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday",
                 "Friday", "Saturday", "Sunday"]
 
-    total = sum(deliveries)
+    total = 0
+    for count in deliveries:                  # accumulator instead of sum()
+        total = total + count
     average = total / 7
 
     days_meeting_target = 0
