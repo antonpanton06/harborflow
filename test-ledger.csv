@@ -1,10 +1,10 @@
 area,test_case,input_summary,expected_result,actual_result,owner,status
-Menu,Close console,Option 1,Closing message printed exactly once,As expected,Vladyslav,Pass
-Reference,Valid lowercase,Lowercase valid reference,Normalized valid reference,As expected,Vladyslav,Pass
-Quote,Decimal values,Decimal distance and weight,Two-decimal quote,As expected,Vladyslav,Pass
-Labels,Duplicates,Mixed case duplicate labels,First-seen unique order,As expected,Vladyslav,Pass
-Capacity,Later item fits,Rejected heavy item followed by lighter item,Later item accepted,As expected,Vladyslav,Pass
-Performance,Boundary delay,Delay of 15 minutes,MINOR DELAY,As expected,Vladyslav,Pass
-Weekly report,Last-day tie,Tied high or low on later day,Last tied day reported,As expected,Vladyslav,Pass
-Validation,Invalid then valid,Invalid value followed by valid value,Only affected prompt repeats,As expected,Vladyslav,Pass
-Scenarios,All services,One distance and weight,Three prices and extrema,As expected,Vladyslav,Pass
+Menu,Close console,Option 1,Closing message printed exactly once,Closing message printed once,Vladyslav,Pass
+Reference,Valid lowercase,Lowercase valid reference,Normalized valid reference,Valid reference: HFL-NOR-2048,Vladyslav,Pass
+Quote,Decimal values,Decimal distance and weight,Two-decimal quote,Delivery quote: 197.81 SEK,Vladyslav,Pass
+Labels,Duplicates,Mixed case duplicate labels,First-seen unique order,Unique load list: 1. GB-104 2. GB-220 3. SE-011 Total unique parcels: 3,Vladyslav,Pass
+Capacity,Later item fits,Rejected heavy item followed by lighter item,Later item accepted,Parcel 1: ACCEPTED Parcel 2: REJECTED Parcel 3: ACCEPTED Parcel 4: ACCEPTED Accepted parcels: 3 Loaded weight: 95.00 kg Remaining сapacity: 5.00 kg,Vladyslav,Pass
+Performance,Boundary delay,Delay of 15 minutes,MINOR DELAY,Delay: 15 minutes Service status: MINOR DELAY,Vladyslav,Pass
+Weekly report,Last-day tie,Tied high or low on later day,Last tied day reported," Completed deliveries: 42, 55, 55, 38, 61, 61, 20 > Highest day: Saturday (61)",Vladyslav,Pass
+Validation,Invalid then valid,Invalid value followed by valid value,Only affected prompt repeats,"Distance -5 and abc rejected, prompt repeated; weight 0 rejected; code q rejected; then Delivery quote: 118.00 SEK",Vladyslav,Pass
+Scenarios,All services,One distance and weight,Three prices and extrema,"18 km, 12 kg -> Standard 210.00, Express 262.50, Priority 336.00; Cheapest: Standard; Most expensive: Priority",Vladyslav,Pass

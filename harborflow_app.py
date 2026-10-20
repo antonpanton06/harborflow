@@ -136,7 +136,7 @@ def validate_reference(reference):
     if len(reference) != 0:                         # If string isnt empty by this point it is valid
         print(f"Valid reference: {reference}")      #
     else:                                           # If ir is empty it is invalid
-        print("Invalid booking reference")       #
+        print("Invalid booking reference.")       #
     return reference
 #Option 3,
 def calculate_quote(distance, weight, service_code):
@@ -219,8 +219,8 @@ def ParcelPacking(vanCap, parcelWeights):
 
      # Results
     print(f"Accepted parcels: {len(acceptedParcel)}")
-    print(f"Loaded weight: {sum(acceptedParcel):.2f}kg")
-    print(f"Remaining Capacity: {vanCap:.2f}kg")
+    print(f"Loaded weight: {sum(acceptedParcel):.2f} kg")
+    print(f"Remaining capacity: {vanCap:.2f} kg")
 
 #Option 6,
 def service_status(damaged_parcels,delay):
