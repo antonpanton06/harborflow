@@ -221,57 +221,45 @@ def service_status(damaged_parcels,delay):
 
 #Option 7,
 def weekly_dispatch_report(deliveries_input, target):
+    values = deliveries_input.split(",")
 
-    if range(7) != range(len(deliveries_input.split(","))):
+    if len(values) != 7:
         print("Error -  Weekly report requires 7 delivery counts.")
         return None
-    
-    delivery_values = deliveries_input.split(",")
 
-    deliveries = []
+    try:
+        deliveries = [int(value.strip()) for value in values]
+    except ValueError:
+        print("Error - Delivery counts must be integers.")
+        return None
 
-    for value in delivery_values:
-        deliveries.append(int(value.strip()))
+    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday",
+                "Friday", "Saturday", "Sunday"]
 
+    total = sum(deliveries)
+    average = total / 7
 
-    weekdays = [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-    ]
-
-    total = 0
+    days_meeting_target = 0
     highest = deliveries[0]
     lowest = deliveries[0]
-    highest_day = 0
-    lowest_day = 0
-    days_meeting_target = 0
+    highest_day = weekdays[0]
+    lowest_day = weekdays[0]
 
-    for i in range(7):
-        total = total + deliveries[i]
-
-        if deliveries[i] >= target:
-            days_meeting_target = days_meeting_target + 1
-
-        if deliveries[i] >= highest:
-            highest = deliveries[i]
-            highest_day = i
-
-        if deliveries[i] <= lowest:
-            lowest = deliveries[i]
-            lowest_day = i
-
-    average = total / 7
+    for day, count in zip(weekdays, deliveries):
+        if count >= target:
+            days_meeting_target += 1
+        if count >= highest:
+            highest = count
+            highest_day = day
+        if count <= lowest:
+            lowest = count
+            lowest_day = day
 
     print("Weekly dispatch report")
     print(f"Total deliveries: {total}")
     print(f"Average per day: {average:.2f}")
-    print(f"Highest day: {weekdays[highest_day]} ({highest})")
-    print(f"Lowest day: {weekdays[lowest_day]} ({lowest})")
+    print(f"Highest day: {highest_day} ({highest})")
+    print(f"Lowest day: {lowest_day} ({lowest})")
     print(f"Days meeting target: {days_meeting_target}")
 
 #Option 8, 
