@@ -85,7 +85,7 @@ def main():
                 print("Error - Value must be an integer")
                 continue
             delay = delivery - promised_delivery 
-            if (delivery < 0 or promised_delivery < 0):
+            if (delivery < 0 or promised_delivery < 0 or damaged_parcels < 0):
                 print("Error - Values must be greater than zero.")
                 continue
             service_status(damaged_parcels, delay)
@@ -102,17 +102,8 @@ def main():
             weekly_dispatch_report(deliveries_input, target)
 
         elif option == 8:
-            try:
-                distance = float(input("Distance (km): "))
-                weight = float(input("Total parcel weight (kg): "))
-
-                if distance <= 0 or weight <= 0:
-                    print("Error - Values must be greater than zero.")
-                    continue
-
-            except ValueError:
-                print("Error - Value must be float.")
-                continue
+            distance = read_positive_number("Distance (km): ")
+            weight = read_positive_number("Weight (kg): ")
             compare_services(distance, weight)
 
         else:
@@ -172,15 +163,8 @@ def ConsolidateParcelLabels(scanned_labels):
         if not label:
             continue #Skip empty labels
 
-        if len(label) != 6 or label[2] != "-":
-            print(f"Invalid label format: {label}")
-            continue #Skip invalid labels
-
         if label not in unique_labels:
             unique_labels.append(label)
-
-    if not unique_labels:
-        print("No valid labels found.")
         
 
     print("Unique load list:")
@@ -249,7 +233,11 @@ def weekly_dispatch_report(deliveries_input, target):
     deliveries = []
     for value in values:                      # convert each text value to an int
         try:
-            deliveries.append(int(value.strip()))
+            count = int(value.strip())
+            if count < 0:
+                print("Error - Weekly report requires 7 delivery counts.")
+                return None
+            deliveries.append(count)
         except ValueError:
             print("Error - Delivery counts must be integers.")
             return None
