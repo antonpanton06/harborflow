@@ -96,7 +96,7 @@ def main():
             compare_services(distance, weight)
 
         else:
-            print("Invalid option. Please select a valid service.")
+            print("Error - Select a service from 1 to 8.")
 
 
 #Option 2, 
