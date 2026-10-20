@@ -5,6 +5,29 @@ entry point so the file can be run with: python harborflow_app.py
 """
 
 
+def read_positive_number(prompt):
+    """Ask until the user enters a number greater than zero."""
+    value = 0
+    while value <= 0:
+        try:
+            value = float(input(prompt))
+        except ValueError:
+            value = 0
+        if value <= 0:
+            print("Error - Value must be greater than zero.")
+    return value
+
+
+def read_service_code(prompt):
+    """Ask until the user enters S, X or P."""
+    code = ""
+    while code not in ("S", "X", "P"):
+        code = input(prompt).strip().upper()
+        if code not in ("S", "X", "P"):
+            print("Error - Service code must be S, X or P.")
+    return code
+
+
 def main():
     """Run the HarborFlow Dispatch Console."""
     running = True
@@ -36,14 +59,11 @@ def main():
             validate_reference(oldRef)
 
         elif option == 3:
-            try:
-                distance = float(input("Distance (km): "))
-                weight = float(input("Total parcel weight (kg): "))
-            except ValueError:
-                print("Error - Values must be floats.")
-                continue
-            service_code = input("Service code (S for Standard), (X for Express) or (P for priority): ").upper()
-            calculate_quote(distance, weight, service_code)
+            distance = read_positive_number("Distance (km): ")
+            weight = read_positive_number("Weight (kg): ")
+            service_code = read_service_code("Service code: ")
+            quote = calculate_quote(distance, weight, service_code)
+            print(f"Delivery quote: {quote:.2f} SEK")
 
         elif option == 4:
             scanned_labels = (input("Scanned labels: "))
@@ -53,7 +73,7 @@ def main():
         # ParcelPacking("100", "10,70, 40, 20, 500")
             
             capacity = input("Van capacity (kg): ")
-            parcelsWeights = input("Parcel weight (kg): ")
+            parcelsWeights = input("Parcel weights (kg): ")
             ParcelPacking(capacity, parcelsWeights)
 
         elif option == 6:
@@ -110,13 +130,13 @@ def validate_reference(reference):
     # Example reference: HFL-NOR-2048
     if len(reference) != 12:
         reference = ""
-    elif reference[0:3] != "HFL" or reference[3] != "-" or reference[7] != "-" or reference[4:7].isalpha() == False or reference[9:12].isdigit() == False:
+    elif reference[0:3] != "HFL" or reference[3] != "-" or reference[7] != "-" or reference[4:7].isalpha() == False or reference[8:12].isdigit() == False:
         reference = ""
 
     if len(reference) != 0:                         # If string isnt empty by this point it is valid
-        print(f"Booking reference: {reference}")      #
+        print(f"Valid reference: {reference}")      #
     else:                                           # If ir is empty it is invalid
-        print(f"Invalid booking reference: {oldRef}")       #
+        print("Invalid booking reference")       #
     return reference
 #Option 3,
 def calculate_quote(distance, weight, service_code):
@@ -137,7 +157,6 @@ def calculate_quote(distance, weight, service_code):
     quote = subtotal * multiplier
 
 
-    print(f"Delivery quote: {quote:.2f} SEK")
     return quote   
 
 #Option 4,
@@ -192,11 +211,11 @@ def ParcelPacking(vanCap, parcelWeights):
     # If so print "Accepted" and add parcel to list with accepted parcels
     for i in enumerate(parcelWeights):                          
         if (vanCap - i[1]) >= 0:                                
-            print(f"Parcel {i[0]+1}: Accepted")
+            print(f"Parcel {i[0]+1}: ACCEPTED")
             acceptedParcel.append(i[1])
             vanCap = vanCap - i[1]
         else: # else print "Rejected"
-            print(f"Parcel {i[0]+1}: Rejected")
+            print(f"Parcel {i[0]+1}: REJECTED")
 
      # Results
     print(f"Accepted parcels: {len(acceptedParcel)}")
