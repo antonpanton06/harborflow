@@ -24,7 +24,7 @@ def main():
             option = int(input("Select service: "))
 
         except ValueError:
-            print("Error - Please select a service from 1 to 8.")
+            print("Error - Select a service from 1 to 8.")
             continue
 
         if option == 1:
@@ -32,7 +32,7 @@ def main():
             running = False
 
         elif option == 2:
-            oldRef = input("Reference: ")
+            oldRef = input("Booking reference: ")
             validate_reference(oldRef)
 
         elif option == 3:
@@ -96,7 +96,7 @@ def main():
             compare_services(distance, weight)
 
         else:
-            print("Invalid option. Please select a valid service.")
+            print("Error - Select a service from 1 to 8.")
 
 
 #Option 2, 
@@ -114,9 +114,9 @@ def validate_reference(reference):
         reference = ""
 
     if len(reference) != 0:                         # If string isnt empty by this point it is valid
-        print(f"Valid reference: {reference}")      #
+        print(f"Booking reference: {reference}")      #
     else:                                           # If ir is empty it is invalid
-        print(f"Invalid reference: {oldRef}")       #
+        print(f"Invalid booking reference: {oldRef}")       #
     return reference
 #Option 3,
 def calculate_quote(distance, weight, service_code):
@@ -176,8 +176,9 @@ def ParcelPacking(vanCap, parcelWeights):
     try:
         vanCap = int(vanCap)                                        # Turn inputed van capacity string to integer (May change to float)
         parcelWeights = parcelWeights.replace(" ", "").split(",")   # Turn inputed parcel weight string to list
-        parcelWeights = [int(x) for x in parcelWeights]             # Turn all elements in list into integers
-
+        for i in range(len(parcelWeights)):                         # Turn all elements in list into integers
+            parcelWeights[i] = int(parcelWeights[i])
+        
     except ValueError:                                              # Checks that input is an integer
         print("Error - Value must be an integer and not empty.")
         return None
@@ -220,57 +221,45 @@ def service_status(damaged_parcels,delay):
 
 #Option 7,
 def weekly_dispatch_report(deliveries_input, target):
+    values = deliveries_input.split(",")
 
-    if range(7) != range(len(deliveries_input.split(","))):
+    if len(values) != 7:
         print("Error -  Weekly report requires 7 delivery counts.")
         return None
-    
-    delivery_values = deliveries_input.split(",")
 
-    deliveries = []
+    try:
+        deliveries = [int(value.strip()) for value in values]
+    except ValueError:
+        print("Error - Delivery counts must be integers.")
+        return None
 
-    for value in delivery_values:
-        deliveries.append(int(value.strip()))
+    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday",
+                "Friday", "Saturday", "Sunday"]
 
+    total = sum(deliveries)
+    average = total / 7
 
-    weekdays = [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-    ]
-
-    total = 0
+    days_meeting_target = 0
     highest = deliveries[0]
     lowest = deliveries[0]
-    highest_day = 0
-    lowest_day = 0
-    days_meeting_target = 0
+    highest_day = weekdays[0]
+    lowest_day = weekdays[0]
 
-    for i in range(7):
-        total = total + deliveries[i]
-
-        if deliveries[i] >= target:
-            days_meeting_target = days_meeting_target + 1
-
-        if deliveries[i] >= highest:
-            highest = deliveries[i]
-            highest_day = i
-
-        if deliveries[i] <= lowest:
-            lowest = deliveries[i]
-            lowest_day = i
-
-    average = total / 7
+    for day, count in zip(weekdays, deliveries):
+        if count >= target:
+            days_meeting_target += 1
+        if count >= highest:
+            highest = count
+            highest_day = day
+        if count <= lowest:
+            lowest = count
+            lowest_day = day
 
     print("Weekly dispatch report")
     print(f"Total deliveries: {total}")
     print(f"Average per day: {average:.2f}")
-    print(f"Highest day: {weekdays[highest_day]} ({highest})")
-    print(f"Lowest day: {weekdays[lowest_day]} ({lowest})")
+    print(f"Highest day: {highest_day} ({highest})")
+    print(f"Lowest day: {lowest_day} ({lowest})")
     print(f"Days meeting target: {days_meeting_target}")
 
 #Option 8, 

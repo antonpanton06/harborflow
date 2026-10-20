@@ -8,7 +8,7 @@ def read_weekly_deliveries():
         if valid:
             for part in parts:
                 part = part.strip()
-                if part.isdigit():
+                if part.isdecimal():
                     deliveries.append(int(part))
                 else:
                     valid = False
@@ -22,7 +22,7 @@ def read_target():
     """Ask until a non-negative integer target is entered."""
     while True:
         text = input("Daily target: ").strip()
-        if text.isdigit():
+        if text.isdecimal():
             return int(text)
         print("Error - Value must be greater than zero.")
 
@@ -57,7 +57,7 @@ def print_weekly_report(deliveries, stats):
 
     print("Weekly dispatch report")
     print(f"Total deliveries: {total}")
-    print(f"Average per day: {total / 7:.2f}")
+    print(f"Average per day: {total / len(deliveries):.2f}")
     print(f"Highest day: {weekdays[highest_day]} ({deliveries[highest_day]})")
     print(f"Lowest day: {weekdays[lowest_day]} ({deliveries[lowest_day]})")
     print(f"Days meeting target: {days_meeting_target}")
@@ -87,7 +87,7 @@ def read_menu_option():
     """Ask until an integer from 1 to 8 is entered."""
     while True:
         text = input("Select service: ").strip()
-        if text.isdigit():
+        if text.isdecimal():
             option = int(text)
             if 1 <= option <= 8:
                 return option
